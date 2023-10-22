@@ -13,13 +13,17 @@ window.onload=function(){
         sqr[i].classList.add("square");
         sqr[i].addEventListener('click', function(){
             if (currentPlayer == "X") {
-                sqr[i].innerText= "X"
+                sqr[i].classList.add('square', 'X');
+                sqr[i].innerText= "X";
                 state_of_game[sqr[i]] = "X";
                 currentPlayer= "O";
-            }else {
+                sqr[i].classList.remove('O'); 
+                
+            }else{
+                sqr[i].classList.add('square', 'O');
                 sqr[i].innerText= "O";
                 state_of_game[sqr[i]] = "O";
-                currentPlayer = "X"
+                currentPlayer = "X";
             }
         })
     }
