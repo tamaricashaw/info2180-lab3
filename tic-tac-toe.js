@@ -8,58 +8,70 @@ window.onload=function(){
         "", "", ""
     
     ];
+
     let currentPlayer= "X";
     for (let i=0; i < sqr.length;i++){
         sqr[i].classList.add("square");
+
+        sqr[i].addEventListener('mouseover',function(){
+            sqr[i].classList.add('hover') 
+        });
+
+        sqr[i].addEventListener('mouseout', function(){
+            sqr[i].classList.remove('hover');
+        });
+
+        
+        let stat = document.getElementById("status")
+
         sqr[i].addEventListener('click', function(){
             if (currentPlayer == "X") {
                 sqr[i].classList.add('square', 'X');
-                sqr[i].innerText= "X";
-                state_of_game[sqr[i]] = "X";
-                currentPlayer= "O";
-                sqr[i].classList.remove('O'); 
+                sqr[i].classList.remove('O');
                 
+                sqr[i].innerText= "X";
+                state_of_game[i] = "X";
+                
+
+                if (sqr_check(currentPlayer)){
+                    stat.innerHTML= "Congratulations! X is the Winner!";
+                    console.log(stat);
+                }
+                console.log(state_of_game);
+                
+                currentPlayer= "O";
             }else{
                 sqr[i].classList.add('square', 'O');
+                sqr[i].classList.remove('X');
+                
                 sqr[i].innerText= "O";
-                state_of_game[sqr[i]] = "O";
+                state_of_game[i] = "O";
+               
+               
+                if (sqr_check (currentPlayer)){
+                    stat.innerHTML= "Congratulations! O is the Winner!";
+                    console.log(stat);
+                }
+                console.log(state_of_game);
+
                 currentPlayer = "X";
             }
         })
+         
+        
     }
+
+    function sqr_check(p){
+       
+        if ((state_of_game[0]== p && state_of_game[1] == p && state_of_game[2]== p ) || (state_of_game[3]== p && state_of_game[4] == p && state_of_game[5]== p ) ||
+            (state_of_game[6]== p && state_of_game[7] == p && state_of_game[8]== p ) || (state_of_game[0]== p  && state_of_game[3] == p && state_of_game[6]== p ) ||
+            (state_of_game[1]== p && state_of_game[4] == p && state_of_game[7]== p ) || (state_of_game[2]== p && state_of_game[5] == p && state_of_game[8]== p )||
+            (state_of_game[1]== p && state_of_game[3] == p && state_of_game[9]== p ) || (state_of_game[2]== p  && state_of_game[4] == p && state_of_game[6]== p )){
+        
+                return true;  
+        }
+        
+        }
     
-}
-
-//array to keeep track of state of game
-
-
-
-
-// function squareClick(event){
-//     const square = event.target;
-//     const squareId = square.id
-
-//     const rowIndex = Math.floor((parseInt(squareId.slice(-1)) - 1) / 3);
-//     const colIndex = (parseInt(squareId.slice(-1)) - 1) % 3;
-
-//     if (state_of_game[rowIndex][colIndex] === "") {
-//         // Update the game state and UI
-//         state_of_game[rowIndex][colIndex] = currentPlayer;
-//         square.textContent = currentPlayer;
-//         square.classList.add(currentPlayer);
-
-//         currentPlayer = currentPlayer === "X" ? "O" : "X";
-// }
-// }
-
-// const squares = document.querySelectorAll('.square');
-// squares.forEach(function(square, index) {
-//   square.addEventListener('click', handleSquareClick);
-//   square.setAttribute("data-row", Math.floor(index / 3));
-//   square.setAttribute("data-col", index % 3);
-// });
-
-// const squareX = document.querySelector('.square.X');
-
-// // Get the computed color property
-// const color = window.getComputedStyle(squareX).getPropertyValue('color');
+ }
+ //stat.innerHTML= "Congratulations! O is the Winner!";
