@@ -1,11 +1,13 @@
 window.onload=function(){
+    //getting square class
     let parent_board= document.getElementById("board");
     let sqr= parent_board.querySelectorAll("div");
     
+    //getting reset button and status element
     let rbutton= document.querySelector('.controls .btn');
     let stat = document.getElementById("status");
 
-
+    //reset button event listenener and function
     rbutton.addEventListener("click", function(){
         resetGame();
         });
@@ -22,7 +24,7 @@ window.onload=function(){
 
 
 
-
+    // array that keeps track of what the players input
     let state_of_game = [
         "", "", "",
         "", "", "",
@@ -31,22 +33,22 @@ window.onload=function(){
     ];
 
 
-
+    //initializing  current player to x. 
     let currentPlayer= "X";
     for (let i=0; i < sqr.length;i++){
         sqr[i].classList.add("square");
 
-        sqr[i].addEventListener('mouseover',function(){
+        sqr[i].addEventListener('mouseover',function(){          //hover functionalility
             sqr[i].classList.add('hover') 
         });
 
-        sqr[i].addEventListener('mouseout', function(){
+        sqr[i].addEventListener('mouseout', function(){         //no_hover functionality
             sqr[i].classList.remove('hover');
         });
 
         
         
-
+        // loop for adding each element on the board by each player and checking to see if they win
         sqr[i].addEventListener('click', function(){
 
             if (sqr[i].textContent !== "") {
@@ -54,26 +56,21 @@ window.onload=function(){
               }
 
             if (currentPlayer == "X") {
-
                 sqr[i].classList.add('square', 'X');
                 sqr[i].innerText= "X";
                 
-
                 state_of_game[i] = "X";
                 
-
                 if (sqr_check(currentPlayer)){
                     stat.innerHTML= "Congratulations! X is the Winner!";
                     console.log(stat);
 
                     
                 }
-                console.log(state_of_game);
                 
-                currentPlayer= "O";
+                currentPlayer= "O";      //setting currentplaer to  O after first player
             }else{
                 sqr[i].classList.add('square', 'O');
-                
                 sqr[i].innerText= "O";
                 state_of_game[i] = "O";
                
@@ -82,15 +79,15 @@ window.onload=function(){
                     stat.innerHTML= "Congratulations! O is the Winner!";
                     console.log(stat);
                 }
-                console.log(state_of_game);
 
-                currentPlayer = "X";
+                currentPlayer = "X";    //setting currentplaer to  X  for next player
             }
         })
          
         
     }
 
+    //checking to see wining squares
     function sqr_check(p){
        
         if ((state_of_game[0]== p && state_of_game[1] == p && state_of_game[2]== p ) || (state_of_game[3]== p && state_of_game[4] == p && state_of_game[5]== p ) ||
