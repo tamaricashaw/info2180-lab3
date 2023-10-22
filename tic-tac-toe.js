@@ -1,6 +1,27 @@
 window.onload=function(){
     let parent_board= document.getElementById("board");
     let sqr= parent_board.querySelectorAll("div");
+    
+    let rbutton= document.querySelector('.controls .btn');
+    let stat = document.getElementById("status");
+
+
+    rbutton.addEventListener("click", function(){
+        resetGame();
+        });
+
+    function resetGame() {
+        for (let i = 0; i < sqr.length; i++) {
+            sqr[i].textContent = "";
+            state_of_game[i] = "";
+            sqr[i].classList.remove("X", "O");
+            }
+        stat.innerHTML = "Move your mouse over a square and click to play an X or an O.";
+        currentPlayer = "X";
+        };
+
+
+
 
     let state_of_game = [
         "", "", "",
@@ -8,6 +29,8 @@ window.onload=function(){
         "", "", ""
     
     ];
+
+
 
     let currentPlayer= "X";
     for (let i=0; i < sqr.length;i++){
@@ -22,27 +45,34 @@ window.onload=function(){
         });
 
         
-        let stat = document.getElementById("status")
+        
 
         sqr[i].addEventListener('click', function(){
+
+            if (sqr[i].textContent !== "") {
+                return;
+              }
+
             if (currentPlayer == "X") {
+
                 sqr[i].classList.add('square', 'X');
-                sqr[i].classList.remove('O');
-                
                 sqr[i].innerText= "X";
+                
+
                 state_of_game[i] = "X";
                 
 
                 if (sqr_check(currentPlayer)){
                     stat.innerHTML= "Congratulations! X is the Winner!";
                     console.log(stat);
+
+                    
                 }
                 console.log(state_of_game);
                 
                 currentPlayer= "O";
             }else{
                 sqr[i].classList.add('square', 'O');
-                sqr[i].classList.remove('X');
                 
                 sqr[i].innerText= "O";
                 state_of_game[i] = "O";
@@ -70,8 +100,9 @@ window.onload=function(){
         
                 return true;  
         }
-        
+        return false;
         }
+
+        
     
  }
- //stat.innerHTML= "Congratulations! O is the Winner!";
